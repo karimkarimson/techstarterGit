@@ -53,18 +53,10 @@ describe("Teste diese Unit", () => {
 npm run test
 ```
 
-
-
-
-<!-- !DIESE FRAGEN NOCH BEANTWORTEN: -->
-
-
-
 6. **Welche zusätzlichen Möglichkeiten gibt es, um Unit Tests zu erweitern und zu verbessern?**
    - Benenne einige weitere Techniken oder Werkzeuge, die neben Mocha und Chai zur Verbesserung von Unit Tests verwendet werden können.
-   >
+   > Man kann die Testing-Frameworks zum Teil selber erweitern und somit die Tests für den eigenen Gebrauch spezifizieren. Zudem gibt es viele weitere Frameworks und Tools die man nutzen kann, wie zB.: [Cypress](https://www.cypress.io/), [Cucumber](https://cucumber.io/docs/installation/javascript/) oder [QUnit](https://qunitjs.com/)
 
 7. **Warum sollten Entwickler regelmäßig Unit Tests durchführen und wie tragen sie zur kontinuierlichen Integration und Bereitstellung bei?**
     - Erkläre den Zusammenhang zwischen Unit Tests, kontinuierlicher Integration und kontinuierlicher Bereitstellung (CI/CD) in der Softwareentwicklung.
-    >
-
+    > Da in einer CI/CD sichergestellt werden soll, dass nur Code integriert wird der *das System nicht behindert* und der zu *keinen gravierenden Folgen* für das Programm führt, wird mit Hilfe von Tests in der CI/CD dies sichergestellt. Beim integrieren einer Änderung kann somit sichergestellt werden, dass alle bisherigen integrierten Code-Funktionen immernoch gewährleistet sind.
