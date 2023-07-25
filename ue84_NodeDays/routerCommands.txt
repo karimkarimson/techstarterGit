@@ -1,0 +1,155 @@
+// DEFINING & USING SEPERATE ROUTE MODULES 
+// wiki.js - Wiki route module.
+
+const express = require("express");
+const router = express.Router();
+
+// Home page route.
+router.get("/", function (req, res) {
+  res.send("Wiki home page");
+});
+
+// About page route.
+router.get("/about", function (req, res) {
+  res.send("About this wiki");
+});
+
+module.exports = router;
+
+// IN THE MAIN APP THEN
+const wiki = require("./wiki.js");
+// …
+app.use("/wiki", wiki);
+
+
+// ROUTE FUNCTIONS
+router.get("/about", function (req, res) {
+  res.send("About this wiki");
+});
+
+// POST ROUTE
+router.post("/about", (req, res) => {
+  res.send("About this wiki");
+});
+
+
+// REGEX AND GLOBBING ON ROUTES
+// find any route that ends on fish
+app.get(/.*fish$/, function (req, res) {
+  // …
+});
+
+
+// ROUTE PARAMETERS
+app.get("/users/:userId/books/:bookId", (req, res) => {
+  // Access userId via: req.params.userId
+  // Access bookId via: req.params.bookId
+// Import the module
+const asyncHandler = require("express-async-handler");
+
+exports.get(
+  "/about",
+  asyncHandler(async (req, res, next) => {
+    const successfulResult = await About.find({}).exec();
+    res.render("about_view", { title: "About", list: successfulResult });
+  })
+);
+
+// INSIDE A TRY CATCH BLOCK
+// Import the module
+const asyncHandler = require("express-async-handler");
+
+exports.get(
+  "/about",
+  asyncHandler(async (req, res, next) => {
+    const successfulResult = await About.find({}).exec();
+    res.render("about_view", { title: "About", list: successfulResult });
+  })
+);
+
+// TUTORIAL CASE WITH PREEXISTING MODULE
+// Import the module
+const asyncHandler = require("express-async-handler");
+
+exports.get(
+  "/about",
+  asyncHandler(async (req, res, next) => {
+    const successfulResult = await About.find({}).exec();
+    res.render("about_view", { title: "About", list: successfulResult });
+  })
+);
+
+  res.send(req.params);
+});
+// Import the module
+const asyncHandler = require("express-async-handler");
+
+exports.get(
+  "/about",
+  asyncHandler(async (req, res, next) => {
+    const successfulResult = await About.find({}).exec();
+    res.render("about_view", { title: "About", list: successfulResult });
+  })
+);
+
+// INSIDE A TRY CATCH BLOCK
+// Import the module
+const asyncHandler = require("express-async-handler");
+
+exports.get(
+  "/about",
+  asyncHandler(async (req, res, next) => {
+    const successfulResult = await About.find({}).exec();
+    res.render("about_view", { title: "About", list: successfulResult });
+  })
+);
+
+// TUTORIAL CASE WITH PREEXISTING MODULE
+// Import the module
+const asyncHandler = require("express-async-handler");
+
+exports.get(
+  "/about",
+  asyncHandler(async (req, res, next) => {
+    const successfulResult = await About.find({}).exec();
+    res.render("about_view", { title: "About", list: successfulResult });
+  })
+);
+
+
+
+
+// ERROR HANDLING
+router.get("/about", (req, res, next) => {
+  About.find({}).exec((err, queryResults) => {
+    if (err) {
+      return next(err);
+    }
+    //Successful, so render
+    res.render("about_view", { title: "About", list: queryResults });
+  });
+});
+
+// INSIDE A TRY CATCH BLOCK
+exports.get("/about", async function (req, res, next) {
+  try {
+    const successfulResult = await About.find({}).exec();
+    res.render("about_view", { title: "About", list: successfulResult });
+  }
+  catch (error) {
+    return next(error);
+  }
+};
+
+// TUTORIAL CASE WITH PREEXISTING MODULE
+// Import the module
+const asyncHandler = require("express-async-handler");
+
+exports.get(
+  "/about",
+  asyncHandler(async (req, res, next) => {
+    const successfulResult = await About.find({}).exec();
+    res.render("about_view", { title: "About", list: successfulResult });
+  })
+);
+

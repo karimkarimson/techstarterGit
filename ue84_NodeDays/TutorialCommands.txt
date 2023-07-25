@@ -1,0 +1,11 @@
+// express-generator, application generator 
+npm i express-generator -g
+
+// create project with generator
+express name-of-the-folder --view=pug //pug is template library
+
+    // enabling console logging/debugging - shows all reqs&ress incl status code & path
+DEBUG=express-locallibrary-tutorial:* npm start
+
+// nodemon, for restarting the server automatically when changes happen
+npm i -g nodemon

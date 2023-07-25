@@ -1,0 +1,191 @@
+CONNCECTING TO MONGODB
+
+// Import the mongoose module
+const mongoose = require("mongoose");
+
+// Set `strictQuery: false` to globally opt into filtering by properties that aren't in the schema
+// Included because it removes preparatory warnings for Mongoose 7.
+// See: https://mongoosejs.com/docs/migrating_to_6.html#strictquery-is-removed-and-replaced-by-strict
+mongoose.set("strictQuery", false);
+
+// Define the database URL to connect to.
+const mongoDB = "mongodb://127.0.0.1/my_database";
+
+// Wait for database to connect, logging an error if there is a problem
+main().catch((err) => console.log(err));
+async function main() {
+  await mongoose.connect(mongoDB);
+}
+
+
+
+
+DEFINING SCHEMAS:
+
+// Require Mongoose
+const mongoose = require("mongoose");
+
+// Define a schema
+const Schema = mongoose.Schema;
+
+const SomeModelSchema = new Schema({
+  a_string: String,
+  a_date: Date,
+});
+
+
+
+CREATING A MODEL
+
+// Define schema
+const Schema = mongoose.Schema;
+
+const SomeModelSchema = new Schema({
+  a_string: String,
+  a_date: Date,
+});
+
+// Compile model from schema
+const SomeModel = mongoose.model("SomeModel", SomeModelSchema);
+
+
+SCHEMA TYPES:   
+
+const schema = new Schema({
+  name: String,
+  binary: Buffer,
+  living: Boolean,
+  updated: { type: Date, default: Date.now() },
+  age: { type: Number, min: 18, max: 65, required: true },
+  mixed: Schema.Types.Mixed,
+  _someId: Schema.Types.ObjectId,
+  array: [],
+  ofString: [String], // You can also have an array of each of the other types too.
+  nested: { stuff: { type: String, lowercase: true, trim: true } },
+});
+
+
+CREATING AND MODIFIYING DOCUMENTS
+
+// Create an instance of model SomeModel
+const awesome_instance = new SomeModel({ name: "awesome" });
+
+// Save the new model instance asynchronously
+await awesome_instance.save();
+
+// other option
+await SomeModel.create({ name: "also_awesome" });
+
+// Access model field values using dot notation
+console.log(awesome_instance.name); //should log 'also_awesome'
+
+// Change record by modifying the fields, then calling save().
+awesome_instance.name = "New cool name";
+await awesome_instance.save();
+
+
+SEARCHING FOR RECORDS
+
+const Athlete = mongoose.model("Athlete", yourSchema);
+
+// find all athletes who play tennis, selecting the 'name' and 'age' fields
+const tennisPlayers = await Athlete.find(
+  { sport: "Tennis" },
+  "name age"
+).exec();
+
+
+// SAME CODE JUST IN PARTS 
+// find all athletes that play tennis 
+const query = Athlete.find({ sport: "Tennis" });
+
+// selecting the 'name' and 'age' fields
+query.select("name age");
+
+// limit our results to 5 items
+query.limit(5);
+
+// sort by age
+query.sort({ age: -1 });
+
+// execute the query at a later time
+query.exec();
+
+// SAME WITH WHERE AS CHAINED CODE
+Athlete.find()
+  .where("sport")
+  .equals("Tennis")
+  .where("age")
+  .gt(17)
+  .lt(50) // Additional where query
+  .limit(5)
+  .sort({ age: -1 })
+  .select("name age")
+  .exec();
+
+// MORE FIND OPTIONS
+findById()
+findOne()
+findByIdAndRemove()
+findByIdAndUpdate()
+findOneAndRemove()
+findOneAndUpdate()
+
+
+WORKING WITH RELATED DOCUMENTS
+const mongoose = require("mongoose");
+
+const Schema = mongoose.Schema;
+
+const authorSchema = Schema({
+  name: String,
+  stories: [{ type: Schema.Types.ObjectId, ref: "Story" }],
+});
+
+const storySchema = Schema({
+  author: { type: Schema.Types.ObjectId, ref: "Author" },
+  title: String,
+});
+
+const Story = mongoose.model("Story", storySchema);
+const Author = mongoose.model("Author", authorSchema);
+
+
+// CREATE NEW AUTHOR AND STORY 
+const bob = new Author({ name: "Bob Smith" });
+
+await bob.save();
+
+// Bob now exists, so lets create a story
+const story = new Story({
+  title: "Bob goes sledding",
+  author: bob._id, // assign the _id from our author Bob. This ID is created by default!
+});
+
+await story.save();
+
+
+// ONE SCHEMA PER FILE
+// File: ./models/somemodel.js
+
+// Require Mongoose
+const mongoose = require("mongoose");
+
+// Define a schema
+const Schema = mongoose.Schema;
+
+const SomeModelSchema = new Schema({
+  a_string: String,
+  a_date: Date,
+});
+
+// Export function to create "SomeModel" model class
+module.exports = mongoose.model("SomeModel", SomeModelSchema);
+
+// REQUIRE THE MODUE
+// Create a SomeModel model just by requiring the module
+const SomeModel = require("../models/somemodel");
+
+// Use the SomeModel object (model) to find all SomeModel records
+const modelInstances = await SomeModel.find().exec();
+
