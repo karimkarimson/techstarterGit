@@ -1,5 +1,4 @@
 const fs = require('fs');
-const { type } = require('os');
 const elfenListeTXT = fs.readFileSync('elfenListe.txt', 'utf8');
 var calorienArray = elfenListeTXT.split('\n');
 var numberArray = [];
