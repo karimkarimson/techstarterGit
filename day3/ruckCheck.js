@@ -1,3 +1,4 @@
+const { secureHeapUsed } = require('crypto');
 const fs = require('fs');
 const { runInThisContext } = require('vm');
 const txt = fs.readFileSync('C:/Users/karim/Desktop/Techstarter/gitrepo/techstarterGit/day3/ruckList.txt', 'utf8');
@@ -14,17 +15,6 @@ function matchChar (char) {
         console.log("Something went wrong");
         throw new Error("Something went wrong");
     };
-    // switch (charCode) {
-    //     case ((charCode > 64 && charCode < 91)):
-    //         return (charCode - 64);
-    //         break;
-    //     case ((charCode > 96 && charCode < 123)):
-    //         return (charCode - 96);
-    //         break;
-    //     default:
-    //         console.log("Something went wrong");
-    //         throw new Error("Something went wrong");
-    // };
 };
 function divideSides (rucksack) {
     var rightSide = [];
@@ -41,10 +31,11 @@ function divideSides (rucksack) {
         return [rightSide, leftSide];
     };
 };
-function checkRuck (leftSide, rightSide) {
+
+function checkRuck (firstMate, secondMate) {
     var matches = [];
-    leftSide.forEach((char) => {
-        rightSide.forEach((char2) => {
+    firstMate.forEach((char) => {
+        secondMate.forEach((char2) => {
             if (char === char2) {
                 console.log("found a match: " + char + " " + char2);
                 if (matches.includes(char)) {
@@ -59,13 +50,14 @@ function checkRuck (leftSide, rightSide) {
 };
 var thisSack = "";
 var sides = [];
+var match = [];
 allRucks.forEach((rucksack) => {
     // * delete lineEndings
     thisSack = rucksack.replace(/(\r\n|\n|\r)/gm, "");
     sides = divideSides(thisSack.trim());
     var leftSide = sides[0];
     var rightSide = sides[1];
-    var match = checkRuck(leftSide, rightSide);
+    match = checkRuck(leftSide, rightSide);
     match.forEach((char) => {
         score += matchChar(char);
     });
