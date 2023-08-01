@@ -1,21 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import {Header, Willkommen, AboutMe, Kontakt, Footer} from './Main.js';
-import {VotingButton} from './Voting.js';
-import {Clock} from './Clock.js';
+import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <Header />
-    <Willkommen />
-    <AboutMe />
-    <Kontakt />
-    <Clock />
-    <VotingButton />
-    <Footer />
+    <App />
   </React.StrictMode>
 );
 
