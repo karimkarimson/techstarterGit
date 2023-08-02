@@ -3,6 +3,7 @@ import Form from "./components/Form";
 import FilterButton from "./components/FilterButton";
 import React, {useState} from "react";
 import { nanoid } from "nanoid";
+
 const FILTER_MAP = {
   All: () => true,
   Active: (task) => !task.completed,

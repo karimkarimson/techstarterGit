@@ -1,4 +1,7 @@
 import React, {useState} from "react";
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteSweepIcon from '@mui/icons-material/DeleteSweep';
+import Button from "@mui/material/Button";
 
 function Todo(props) {
     const [isEditing, setEditing] = useState(false);
@@ -56,19 +59,12 @@ function Todo(props) {
             </label>
           </div>
           <div className="btn-group">
-            <button 
-                type="button" 
-                className="btn"
-                onClick={() => setEditing(true)}
-            >
-                Edit <span className="visually-hidden">{props.name}</span>
-            </button>
-            <button
-              type="button"
-              className="btn btn__danger"
-              onClick={() => props.deleteTask(props.id)}>
-              Delete <span className="visually-hidden">{props.name}</span>
-            </button>
+            <Button onClick={() => setEditing(true)} variant="outlined" color="secondary" startIcon={<EditIcon fontSize="large"/>}>
+              Edit
+            </Button>
+            <Button onClick={() => props.deleteTask(props.id)} variant="outlined" color="secondary" startIcon={<DeleteSweepIcon fontSize="large"/>}>
+              Delete 
+            </Button>
           </div>
         </div>
       );

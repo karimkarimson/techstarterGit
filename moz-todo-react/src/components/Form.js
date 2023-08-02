@@ -1,6 +1,12 @@
 import React, {useState} from "react";
+import IconButton from "@mui/material/IconButton";
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
+import Button from "@mui/material/Button";
+import TextField from '@mui/material/TextField';
 
-
+      // <IconButton aria-label="add a task" color="primary">
+      //   <AddCircleOutlineIcon fontSize="large" />
+      // </IconButton>
 function Form(props) {
     const [name, setName] = useState("");
     function handleSubmit(e) {
@@ -18,18 +24,18 @@ function Form(props) {
           What needs to be done?
         </label>
       </h2>
-      <input
-        type="text"
-        id="new-todo-input"
-        className="input input__lg"
-        name="text"
-        autoComplete="off"
+      <TextField 
+        id="new-todo-input" 
+        variant="outlined" 
+        multiline
+        rows={4}
+        placeholder="what needs to be done?"
         value={name}
         onChange={handleChange}
-      />
-      <button type="submit" className="btn btn__primary btn__lg">
-        Add
-      </button>
+        />
+      <Button type="submit" variant="contained" color="primary" startIcon={<AddCircleOutlineIcon />}>
+        add a task
+      </Button>
     </form>
   );
 }
