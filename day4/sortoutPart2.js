@@ -21,14 +21,13 @@ function cleanElfArray(elfArray) {
     return cleanElfArray;
 }
 function compareElves(elf1, elf2) {
-    if (elf1[0] === elf2[0] || elf1[0] === elf2[1] || elf1[1] === elf2[0] || elf1[1] === elf2[1]) {
-        console.log("!!!! Found match of " + elf1 + " and " + elf2);
-        counter++;
-    } else if ((elf1[0] < elf2[0] && elf1[1] > elf2[0]) || (elf1[0] > elf2[0] && elf1[1] > elf2[0])) {
+    var max = Math.max(elf1[0], elf2[0]);
+    var min= Math.min(elf1[1], elf2[1]);
+    if ((max - min) <= 0) {
         console.log("!!!! Found match of " + elf1 + " and " + elf2);
         counter++;
     } else {
-        console.log("No match of " + elf1 + " and " + elf2);
+        console.log("No match found")
     };
 }
 allPairsArray.forEach((pair) => {
