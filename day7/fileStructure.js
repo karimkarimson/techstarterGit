@@ -27,6 +27,10 @@ function checkCmd(cmd) {
 function checkCmdType(cmd) {
     var bufferArray = cmd.split(" ");
     var cmdArray = [];
+    var currentPath = "";
+    currentDir.forEach((dir) => {
+        currentPath += dir + ".";
+    });
     bufferArray.forEach((element) => {
         if (element !== "" && element !== '$' && element !== " ") {
             cmdArray.push(element);
@@ -36,7 +40,8 @@ function checkCmdType(cmd) {
         if (cmdArray[1] === "..") {
             currentDir.pop();
         } else {
-            fileStructure[cmdArray[1]] = {};
+            currentPath += cmdArray[1];
+            fileStructure.{currentPath} = {};
             fileStructure[cmdArray[1]].size = 0;
             fileStructure[cmdArray[1]].dirs = [];
             currentDir.push(cmdArray[1]);
@@ -72,11 +77,12 @@ cleanCmds.forEach((cmd) => {
 function collectDirs() {
     var dirCounter = 0;
     Object.values(fileStructure).forEach((directory) => {
-        if (directory.size < 100000 ) {
+        if (directory.size < 100001 ) {
             dirCounter++;
         };
     });
     console.log("Number of directories with size less than 100000: " + dirCounter);
 };
+console.log(fileStructure);
 collectDirs();
 
