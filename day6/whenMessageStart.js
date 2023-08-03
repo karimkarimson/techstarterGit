@@ -13,7 +13,7 @@ for (var i = 0; i < codeArray.length; i++ ) {
         };
     };
     if (compared.length === 14) {
-        console.log(`Found 4 different Chars ${lastFour} at index ${i+14}`);
+        console.log(`Found 14 different Chars ${lastFour} at index ${i+14}`);
         break;
     } else {
         continue;
