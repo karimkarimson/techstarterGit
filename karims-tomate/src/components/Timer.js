@@ -25,17 +25,17 @@ export default function Timer(props) {
             justifyContent="center"
         >
             <Grid item>
-                <Button id="buttonDo" onClick={() => setNewTimer(mach)} variant="contained" color="secondary" startIcon={<SchoolIcon fontSize="large"/>}>
+                <Button id="buttonDo" onClick={() => setNewTimer(25)} variant="contained" color="secondary" startIcon={<SchoolIcon fontSize="large"/>}>
                     Let's do it! 25min
                 </Button>
             </Grid>
             <Grid item>
-                <Button id="buttonShort" onClick={() => setNewTimer(kurzepause)} variant="outlined" color="secondary" startIcon={<ChildCareIcon fontSize="large"/>}>
+                <Button id="buttonShort" onClick={() => setNewTimer(5)} variant="outlined" color="secondary" startIcon={<ChildCareIcon fontSize="large"/>}>
                     Keep Calm & Relax 5 min 
                 </Button>
             </Grid>
             <Grid item>
-                <Button id="buttonLong" onClick={() => setNewTimer(langepause)} variant="outlined" color="secondary" startIcon={<EmojiEventsIcon fontSize="large"/>}>
+                <Button id="buttonLong" onClick={() => setNewTimer(25)} variant="outlined" color="secondary" startIcon={<EmojiEventsIcon fontSize="large"/>}>
                     Treat yourself! 25 min
                 </Button>
             </Grid>
