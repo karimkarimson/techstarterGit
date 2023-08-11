@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import './TomatoMain.css';
 
 export default function TomatoMain(props) {
     const [tasks, setTasks] = useState(props.tasklist);
@@ -17,15 +18,16 @@ export default function TomatoMain(props) {
     ));
 
     return (
-        <div id="tomatoMain">
-            <button id="workTime">Let's do this</button>
-            <button id="shortBreakTime">Take a short break</button>
-            <button id="longBreakTime">Take a long break</button>
-            <button id="customTime">My time</button>
+        <div className="TomatoMain" id="tomatoMain">
+            <div className='TimerButtonGroup'>
+                <button id="workTime">Let's do this</button>
+                <button id="shortBreakTime">Take a short break</button>
+                <button id="longBreakTime">Take a long break</button>
+                <button id="customTime">My time</button>
+            </div>
             <section id="containerAllTasks">
                 All tasks:
                 <ul
-                    role="list"
                     className="taskList"
                     aria-labelledby="list-heading">
                         {allTasksList}
@@ -34,7 +36,6 @@ export default function TomatoMain(props) {
             <section id="containerSelectedTasks">
                 Selected tasks:
                 <ul
-                    role="list"
                     className="taskList"
                     aria-labelledby="list-heading">
                         {selectedTasksList}
