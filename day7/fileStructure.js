@@ -1,11 +1,25 @@
+const { dir } = require('console');
 const fs = require('fs');
 const cmds = fs.readFileSync('C:/Users/karim/Desktop/Techstarter/gitrepo/techstarterGit/day7/cmds.txt', 'utf8');
 const cmdsArray = cmds.split('\n');
 const cleanCmds = [];
+// clean up the commands, each line
 cmdsArray.forEach((cmd) => {
     cleanCmds.push(cmd.replace(/(\n\r|\n|\r)/gm, ""));
 });
 
+function getCurrentPath() {
+    var buffer = "fileStructure.";
+    if (currentDir.length === 0) {
+        currentDir.push("/");
+    };
+    for (let i = 0; i < currentDir.length - 1; i++) {
+        buffer += currentDir[i] + ".";
+    };
+    buffer += currentDir[currentDir.length - 1]; 
+    console.log("Current path: " + buffer);
+    return buffer;
+};
 // if line starts with $ then command follows
 // if line starts with dir then directory name follows
 // if line starts with number, then file name follows
@@ -16,59 +30,41 @@ function checkCmd(cmd) {
     if (cmd.startsWith("$")) {
         checkCmdType(cmd);
     } else if (cmd.startsWith("dir")) {
-        saveDir(cmd);
+        // it's a directory
     } else if (!isNaN(parseInt(cmd[0]))) {
-        saveFile(cmd);
+        // add size to current directory
+        addFileSize(cmd);
     } else {
         console.log("error at checkCmd - probably unexpected input: " + cmd);
     };
-};
-
+}
+function addFileSize(cmd) {
+    let sizeToAdd = cmd.split(" ");
+    sizeToAdd = parseInt(sizeToAdd[0]);
+    let path = getCurrentPath();
+    // fileStructure[currentDir[currentDir.length -1]].size += sizeToAdd;
+}
 function checkCmdType(cmd) {
-    var bufferArray = cmd.split(" ");
-    var cmdArray = [];
-    var currentPath = "";
-    currentDir.forEach((dir) => {
-        currentPath += dir + ".";
-    });
-    bufferArray.forEach((element) => {
-        if (element !== "" && element !== '$' && element !== " ") {
-            cmdArray.push(element);
-        };
-    });
-    if (cmdArray[0] === "cd") {
-        if (cmdArray[1] === "..") {
-            currentDir.pop();
-        } else {
-            currentPath += cmdArray[1];
-            fileStructure.{currentPath} = {};
-            fileStructure[cmdArray[1]].size = 0;
-            fileStructure[cmdArray[1]].dirs = [];
-            currentDir.push(cmdArray[1]);
-        };
-    } else if (cmdArray[0] === "ls") {
+    var cmdArray = cmd.split(" ");
+    if (cmdArray[1] === "cd") {
+        changeDir(cmdArray);
+    } else if (cmdArray[1] === "ls") {
         console.log("listing files in " + currentDir[currentDir.length - 1]);
     } else {
-        console.log("New command found: " + cmdArray[0]);
+        console.log("New command found: " + cmdArray[1]);
     };
-};
-function saveDir(dir) {
-    var bufferArray = dir.split(" ");
-    bufferArray.forEach((element) => {
-        if (element !== "" && element !== "dir" && element !== " ") {
-            fileStructure[currentDir[currentDir.length -1]].dirs.push(element);
-        };
-    });
-};
-
-function saveFile(file) {
-    var bufferArray = file.split(" ");
-    bufferArray.forEach((element) => {
-        if (!isNaN(parseInt(element))) {
-            fileStructure[currentDir[currentDir.length -1]].size += parseInt(element);
-        };
-    });
-};
+}
+function changeDir(dirArray) {
+    if (dirArray[2] === "..") {
+        // go up one level
+        currentDir.pop();
+    } else {
+        // go down one level inside the fileStructure object
+        let path = getCurrentPath();
+        fileStructure.path = {childOf: currentDir[currentDir.length -1], size: 0};
+        currentDir.push(dirArray[2]);
+    };
+}
 
 cleanCmds.forEach((cmd) => {
     checkCmd(cmd);
