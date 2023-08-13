@@ -8,77 +8,89 @@ cmdsArray.forEach((cmd) => {
     cleanCmds.push(cmd.replace(/(\n\r|\n|\r)/gm, ""));
 });
 
-function getCurrentPath() {
-    var buffer = "fileStructure.";
-    if (currentDir.length === 0) {
-        currentDir.push("/");
-    };
-    for (let i = 0; i < currentDir.length - 1; i++) {
-        buffer += currentDir[i] + ".";
-    };
-    buffer += currentDir[currentDir.length - 1]; 
-    console.log("Current path: " + buffer);
-    return buffer;
-};
+class Directory {
+    constructor(name, parent, level) {
+        this.name = name;
+        this.parent = parent;
+        this.level = level;
+        this.size = 0;
+        this.children = [];
+    }
+    addChild(child) {
+        this.children.push(child);
+    }
+    addSize(size) {
+        this.size += size;
+    }
+}
+
+const fileStructure = [];
+var level = 0;
+var currentDir;
+
 // if line starts with $ then command follows
 // if line starts with dir then directory name follows
 // if line starts with number, then file name follows
 
-const fileStructure = {};
-const currentDir = [];
 function checkCmd(cmd) {
     if (cmd.startsWith("$")) {
         checkCmdType(cmd);
     } else if (cmd.startsWith("dir")) {
-        // it's a directory
+        handleDir(cmd);
     } else if (!isNaN(parseInt(cmd[0]))) {
-        // add size to current directory
-        addFileSize(cmd);
+        currentDir.addSize(parseInt(cmd));
     } else {
         console.log("error at checkCmd - probably unexpected input: " + cmd);
     };
-}
-function addFileSize(cmd) {
-    let sizeToAdd = cmd.split(" ");
-    sizeToAdd = parseInt(sizeToAdd[0]);
-    let path = getCurrentPath();
-    // fileStructure[currentDir[currentDir.length -1]].size += sizeToAdd;
 }
 function checkCmdType(cmd) {
     var cmdArray = cmd.split(" ");
     if (cmdArray[1] === "cd") {
         changeDir(cmdArray);
     } else if (cmdArray[1] === "ls") {
-        console.log("listing files in " + currentDir[currentDir.length - 1]);
+        console.log("listing files in " + currentDir.name);
     } else {
         console.log("New command found: " + cmdArray[1]);
     };
 }
 function changeDir(dirArray) {
     if (dirArray[2] === "..") {
-        // go up one level
-        currentDir.pop();
+        level--;
+        currentDir = currentDir.parent;
     } else {
-        // go down one level inside the fileStructure object
-        let path = getCurrentPath();
-        fileStructure.path = {childOf: currentDir[currentDir.length -1], size: 0};
-        currentDir.push(dirArray[2]);
+        //check if directory exists
+        level++;
+        var dirExists = fileStructure.find((directory) => {
+            return (directory.name === dirArray[1] && directory.level === level);
+        });
+        if (dirExists) {
+            currentDir = dirExists;
+        } else {
+            // go down one edge and change currentDir
+            currentDir = currentDir.children.find((dir) => {
+                return (dir.name === dirArray[2] && dir.level === level);
+            });
+        };
     };
 }
-
+function handleDir(dir) {
+    var dirArray = dir.split(" ");
+    fileStructure.push(new Directory(dirArray[1], currentDir, level + 1));
+    currentDir.addChild(fileStructure[fileStructure.length - 1]);
+}
 cleanCmds.forEach((cmd) => {
     checkCmd(cmd);
 });
 
-function collectDirs() {
-    var dirCounter = 0;
-    Object.values(fileStructure).forEach((directory) => {
-        if (directory.size < 100001 ) {
-            dirCounter++;
-        };
-    });
-    console.log("Number of directories with size less than 100000: " + dirCounter);
-};
-console.log(fileStructure);
-collectDirs();
+// function collectDirs() {
+//     var dirCounter = 0;
+//     Object.values(fileStructure).forEach((directory) => {
+//         if (directory.size < 100001 ) {
+//             dirCounter++;
+//         };
+//     });
+//     console.log("Number of directories with size less than 100000: " + dirCounter);
+// };
+// console.log(fileStructure);
+// collectDirs();
 
